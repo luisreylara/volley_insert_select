@@ -42,7 +42,28 @@ function retornarConexion(){
 }
 
 ?>
+```
+
+## borrar.php
+```
+<?php
+header('Content-Type: application/json');
+$datos = json_decode(file_get_contents("php://input"),true);
+
+require("conexion.php");
+
+$conn = retornarConexion();
 
 
+$sql = "Delete FROM articulos where codigo = $datos[codigo]";
+//echo $sql;
 
+if ($conn->query($sql) ) {
+  echo '{"resultado":"1"}';
+} else {
+  echo '{"resultado":"0"}';
+}
+
+$conn->close();
+?>
 ```

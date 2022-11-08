@@ -67,3 +67,4 @@ if ($conn->query($sql) ) {
 $conn->close();
 ?>
 ```
+## borrar2.php

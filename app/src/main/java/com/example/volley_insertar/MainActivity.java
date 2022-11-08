@@ -23,7 +23,6 @@ import org.json.JSONObject;
 import java.util.concurrent.BlockingDeque;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "Rey";
     private EditText etcodigo,etdescripcion,etprecio;
     private RequestQueue rq;
     @Override

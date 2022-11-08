@@ -35,9 +35,47 @@ public class MainActivity extends AppCompatActivity {
         etdescripcion=findViewById(R.id.etdescripcion);
         etprecio=findViewById(R.id.etprecio);
         rq= Volley.newRequestQueue(this);
-
     }
 
+    public void borrar(View view){
+        //    {"codigo":"999" }
+        String url="http://datamoviles.tk/recuperar/borrar.php";
+        JSONObject parametros = new JSONObject();
+        try {
+            parametros.put("codigo",etcodigo.getText().toString());
+            // parametros.put("descripcion",etdescripcion.getText().toString());
+           // parametros.put("precio",etprecio.getText().toString());
+        }catch (Exception e){e.printStackTrace();}
+
+        JsonObjectRequest requerimiento = new JsonObjectRequest(Request.Method.POST,
+                url,
+                parametros,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String resu= response.get("resultado").toString();
+                            if (resu.equals("1")){
+                                Toast.makeText(MainActivity.this,"Se eliminó el artículo, todo ok",Toast.LENGTH_SHORT).show();
+                                etcodigo.setText("");
+                                etdescripcion.setText("");
+                                etprecio.setText("");
+                            }else Toast.makeText(MainActivity.this,"No existe el producto con este codigo:",Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainActivity.this,"Rey Problemas de insertar en el servidor: "+ error.toString(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        rq.add(requerimiento);
+
+
+    }
     public void consultar(View view){
         String url="http://datamoviles.tk/recuperar/consultar.php?codigo="+etcodigo.getText().toString();
         JsonArrayRequest requerimiento = new JsonArrayRequest(Request.Method.GET,
@@ -84,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             parametros.put("descripcion",etdescripcion.getText().toString());
             parametros.put("precio",etprecio.getText().toString());
         }catch (Exception e){e.printStackTrace();}
-        Log.d(TAG, "JSON: "+parametros);
+
         JsonObjectRequest requerimiento = new JsonObjectRequest(Request.Method.POST,
                 url,
                 parametros,
@@ -108,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this,"Rey Problemas de insertar en el servidor: "+ error.toString(),Toast.LENGTH_SHORT).show();
             }
         });
-        Log.d(TAG, "agregar: antes de rq.add");
+
     rq.add(requerimiento);
     }
 }

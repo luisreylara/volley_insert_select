@@ -67,32 +67,6 @@ if ($conn->query($sql) ) {
 $conn->close();
 ?>
 ```
-## borrar2.php
-```
-<?php
-header('Content-Type: application/json');
-$datos = json_decode(file_get_contents("php://input"),true);
-
-require("conexion.php");
-
-$conn = retornarConexion();
-
-
-$sql = "Delete FROM articulos where codigo = $datos[codigo]";
-//echo $sql;
-
-mysqli_query($conn,$sql);
-
-$cant=mysqli_affected_rows($conn);
-
-if ($cant==1) {
-  echo '{"resultado":"1"}';
-} else {
-  echo '{"resultado":"0"}';
-}
-
-
-$conn->close();
-
-?>
-```
+# volley_insert
+# volley_insert_select
+# volley_insert_select

@@ -112,4 +112,21 @@ $conn->close();
 ?>
 ```
 
+## login.php
+```
+<?php
+header('Content-Type: application/json');
+$datos = json_decode(file_get_contents("php://input"),true);
 
+$miuser = htmlspecialchars($_GET['miuser']);
+$mipwd = htmlspecialchars($_GET['mipwd']);
+require("conexion.php");
+$conn = retornarConexion();
+$sql = "SELECT id  FROM usuarios where user ='{$miuser}' and pwd='{$mipwd}' ";
+$result = $conn->query($sql);
+$miresult=mysqli_fetch_all($result,MYSQLI_ASSOC);
+echo json_encode($miresult);
+//echo json_encode($sql);
+$conn->close();
+?>
+```
